@@ -6,8 +6,7 @@
         <base-button>Load Submitted Experiences</base-button>
       </div>
       <ul>
-        <survey-result v-for="result in results" :key="result.id" :name="result.name"
-          :rating="result.rating"></survey-result>
+        <SurveyResult v-for="result in results" :key="result.id" :name="result.name" :rating="result.rating" />
       </ul>
     </base-card>
   </section>
@@ -30,4 +29,4 @@ ul {
   margin: 0;
   padding: 0;
 }
-</style>9
+</style>
