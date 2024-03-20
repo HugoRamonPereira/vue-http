@@ -5,8 +5,10 @@
       <div>
         <base-button @click='loadExperiences'>Load Submitted Experiences</base-button>
       </div>
-      <h3 v-if='isLoading'>Loading results...</h3>
-      <ul v-else>
+      <h4 v-if='isLoading'>Loading results...</h4>
+      <h4 v-else-if='!isLoading && (!results || results.length === 0)'>No experiences found. Please add some and try
+        again!</h4>
+      <ul v-else-if='!isLoading && results && results.length > 0'>
         <SurveyResult v-for="result in results" :key="result.id" :name="result.name" :rating="result.rating" />
       </ul>
     </base-card>
