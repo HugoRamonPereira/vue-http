@@ -20,7 +20,8 @@
           <input type="radio" id="rating-great" value="great" name="rating" v-model="chosenRating" />
           <label for="rating-great">Great</label>
         </div>
-        <p v-if="invalidInput">One or more input fields are invalid. Please check your provided data.</p>
+        <h4 v-if="invalidInput">One or more input fields are invalid. Please check your provided data.</h4>
+        <h4 v-if='error'>{{ error }}</h4>
         <div>
           <base-button>Submit</base-button>
         </div>
@@ -36,6 +37,7 @@ export default {
       enteredName: '',
       chosenRating: null,
       invalidInput: false,
+      error: null
     };
   },
   methods: {
@@ -46,6 +48,7 @@ export default {
       }
       this.invalidInput = false;
 
+      this.error = null;
       fetch('https://vue-http-4e3f6-default-rtdb.firebaseio.com/surveys.json', {
         method: 'POST',
         headers: {
@@ -55,7 +58,16 @@ export default {
           name: this.enteredName,
           rating: this.chosenRating
         })
-      });
+      }).then(response => {
+        if (response.ok) {
+          console.log('Request successful!');
+        } else {
+          throw new Error('Could not send your request!')
+        }
+      })
+        .catch((error) => {
+          this.error = error;
+        });
 
       this.enteredName = '';
       this.chosenRating = null;
